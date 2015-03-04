@@ -1,7 +1,9 @@
 http://www.rgagnon.com/javadetails/java-receive-email-using-imap.html
 https://developer.atlassian.com/jiradev/api-reference/jira-rest-apis
-
 https://community.oracle.com/thread/1589468
+
+http://www.sdd.com.ar/jira/rest/api/2.0.alpha1/project/TKT
+https://developer.atlassian.com/static/rest/jira/4.4.1.html
 
 
 Backend:
