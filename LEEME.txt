@@ -1,0 +1,18 @@
+http://www.rgagnon.com/javadetails/java-receive-email-using-imap.html
+https://developer.atlassian.com/jiradev/api-reference/jira-rest-apis
+
+https://community.oracle.com/thread/1589468
+
+
+Backend:
+- Leer mails de soporte por imap
+- Por cada mail:
+-- Llamar por REST a Jira para crear un ticket
+-- Editar el subject del mail y pegarle el numero de ticket
+
+Frontend:
+- Llamar a Jira y traer todos los tkt no asignados
+- Mostrar dos paneles, a la izquierda los tkt no asignados, a la derecha, los usuarios
+- Soportar drag&drop de multiples tkts a un usuario
+- El drop dispara una llamada REST a Jira para asignar el mail
+- Los tkts asignados desaparecen del panel izquierdo
