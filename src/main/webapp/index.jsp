@@ -1,5 +1,12 @@
+<%@page import="ar.com.sdd.asignator.TestImap"%>
 <html>
 <body>
-<h2>Hello World!</h2>
+<h2>Asignator</h2>
+<%
+
+	//TestImap.doit();
+
+%>
+donex
 </body>
 </html>

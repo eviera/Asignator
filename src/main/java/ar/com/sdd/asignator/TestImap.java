@@ -19,19 +19,11 @@ public class TestImap {
 		try {
 			Properties props = System.getProperties();
 			props.setProperty("mail.store.protocol", "imaps");
-
+			props.put("mail.imaps.ssl.trust", "*");
 			Session session = Session.getDefaultInstance(props, null);
-			// session.setDebug(true);
 			store = session.getStore("imaps");
-			store.connect("imap.gmail.com", "eviera.sdd@gmail.com", "telperion");
-			folder = store.getFolder("[Gmail]/Drafts");
-			/*
-			 * Others GMail folders : [Gmail]/All Mail This folder contains all
-			 * of your Gmail messages. [Gmail]/Drafts Your drafts. [Gmail]/Sent
-			 * Mail Messages you sent to other people. [Gmail]/Spam Messages
-			 * marked as spam. [Gmail]/Starred Starred messages. [Gmail]/Trash
-			 * Messages deleted from Gmail.
-			 */
+			store.connect("mail.sdd.com.ar", 993, "soporteebf@sdd.com.ar", "");
+			folder = store.getFolder("Inbox");
 			folder.open(Folder.READ_WRITE);
 			Message messages[] = folder.getMessages();
 			System.out.println("No of Messages : " + folder.getMessageCount());
@@ -52,6 +44,16 @@ public class TestImap {
 				}
 				String subject = msg.getSubject();
 				System.out.println("Saving ... " + subject + " " + from);
+				/*
+				if (from.contains("eviera@sdd.com.ar")) {
+					MimeMessage copia = new MimeMessage((MimeMessage)msg);
+					copia.setSubject("Copia de:" + msg.getSubject() );
+					copia.setFlag(Flags.Flag.SEEN, false);
+					folder.appendMessages(new Message[]{copia}); 
+					copia.saveChanges();					
+				}
+				*/
+				/*
 				// you may want to replace the spaces with "_"
 				// the TEMP directory is used to store the files
 				String filename = "c:/temp/" + subject;
@@ -66,7 +68,7 @@ public class TestImap {
 				copia.saveChanges();
 				msg.setFlag(Flags.Flag.DELETED,true); 
 				folder.expunge();
-
+				*/
 			}
 		} finally {
 			if (folder != null) {

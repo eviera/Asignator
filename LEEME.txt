@@ -6,9 +6,22 @@ http://www.sdd.com.ar/jira/rest/api/2.0.alpha1/project/TKT
 https://developer.atlassian.com/static/rest/jira/4.4.1.html
 http://cxf.apache.org/docs/jax-rs-client-api.html#JAX-RSClientAPI-CXFWebClientAPI
 
+http://stackoverflow.com/questions/20122099/error-in-javamail-pkix-path-building-failed-unable-to-find-valid-certification
+
+Para crear el trustore:
+- Exportar el certificado desde http://mail.sdd.com.ar
+- Crear el ts con: /c/Program\ Files/Java/jdk1.6.0_45/bin/keytool.exe -import -alias mail_sdd_com_ar -file mail_sdd_com_ar.cer -keystore mail_sdd_com_ar.ts -storepass changeit
+
+
+Nota de instalacion:
+- Hacer un git clone https://github.com/eviera/Asignator.git
+- En el Eclipse, importar con Existing Maven Projects
+- En las propiedades del proyecto, agregar un target runtime (un jobss o tomcat) para que tenga las librerias servlet
+
 
 Backend:
 - Leer mails de soporte por imap
+- Usar una blacklist ignorar algunos
 - Por cada mail:
 -- Llamar por REST a Jira para crear un ticket
 -- Editar el subject del mail y pegarle el numero de ticket
