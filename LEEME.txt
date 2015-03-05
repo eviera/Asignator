@@ -5,13 +5,8 @@ https://community.oracle.com/thread/1589468
 http://www.sdd.com.ar/jira/rest/api/2.0.alpha1/project/TKT
 https://developer.atlassian.com/static/rest/jira/4.4.1.html
 http://cxf.apache.org/docs/jax-rs-client-api.html#JAX-RSClientAPI-CXFWebClientAPI
-
+http://www.mkyong.com/java/example-to-run-multiple-jobs-in-quartz/
 http://stackoverflow.com/questions/20122099/error-in-javamail-pkix-path-building-failed-unable-to-find-valid-certification
-
-Para crear el trustore:
-- Exportar el certificado desde http://mail.sdd.com.ar
-- Crear el ts con: /c/Program\ Files/Java/jdk1.6.0_45/bin/keytool.exe -import -alias mail_sdd_com_ar -file mail_sdd_com_ar.cer -keystore mail_sdd_com_ar.ts -storepass changeit
-
 
 Nota de instalacion:
 - Hacer un git clone https://github.com/eviera/Asignator.git
@@ -20,15 +15,20 @@ Nota de instalacion:
 
 
 Backend:
-- Leer mails de soporte por imap
-- Usar una blacklist ignorar algunos
-- Por cada mail:
--- Llamar por REST a Jira para crear un ticket
--- Editar el subject del mail y pegarle el numero de ticket
+- Leer configuracion de un properties
+- Tenes una tarea quartz que haga lo siguiente:
+-- Leer mails de soporte por imap
+-- Usar una blacklist ignorar algunos
+-- Por cada mail:
+--- Llamar por REST a Jira para crear un ticket
+--- Editar el subject del mail y pegarle el numero de ticket
+- Tener unas interfaces REST para comunicarse con el frontend
+-- ConfigurationREST que administra las properties (conexion a mail, conexion a jira)
+-- JiraManagerREST para levantar los jiras
 
 Frontend:
-- Llamar a Jira y traer todos los tkt no asignados
+- Llamar a JiraManagerREST y traer todos los tkt no asignados
 - Mostrar dos paneles, a la izquierda los tkt no asignados, a la derecha, los usuarios
 - Soportar drag&drop de multiples tkts a un usuario
-- El drop dispara una llamada REST a Jira para asignar el mail
+- El drop dispara una llamada a JiraManagerREST (que tira una llamada REST a Jira) para asignar el mail
 - Los tkts asignados desaparecen del panel izquierdo

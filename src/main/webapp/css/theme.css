@@ -1,0 +1,21 @@
+body {
+	padding-bottom: 30px;
+}
+
+.navbar {
+	background-color: #cd201f;
+	border-color: #000;
+}
+
+.navbar-default .navbar-brand, .navbar-default .navbar-nav li a {
+	color: #FFF;
+} 
+
+.navbar-default .navbar-nav li a:hover,  .navbar-default .navbar-nav li a:focus, .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+	color: #FFF;
+	background-color: #ab1b1a; 
+} 
+
+.tube-entry-container {
+	margin-bottom: 50px;	
+}

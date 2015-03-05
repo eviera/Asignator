@@ -1,0 +1,16 @@
+<div class="tube-entry-container" ng-repeat="tubeEntry in tubeEntries | filter:queryEntries">
+	<h2 class="tube-entry-title"><a href="#/entries/{{tubeEntry.id}}">{{ tubeEntry.title }}</a></h2>
+	<p class="tube-entry-comment">{{ tubeEntry.comment }}</p>
+	<div class="row">
+		<div class="col-sm-10">
+			<div class="embed-responsive embed-responsive-16by9">
+				<iframe class="embed-responsive-item tube-entry-video" type="text/html"	ng-src="{{ trustSrc(tubeEntry.url) }}"></iframe>
+			</div>
+		</div>
+		<div class="col-sm-2">
+			<p class="tube-entry-date">{{ tubeEntry.creationDate | date }}</p>
+			<em class="tube-entry-footer">{{ tubeEntry.tagCloud }}</em>
+			<a class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
+		</div>
+	</div>		
+</div>
