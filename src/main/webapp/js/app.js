@@ -3,42 +3,32 @@
 (function() {
 	'use strict';
 	
-	var app = angular.module('tubeCurator', ['ngSanitize', 'ngResource', 'ngRoute']);
+	var app = angular.module('asignator', ['ngSanitize', 'ngResource', 'ngRoute']);
 	
 	app.config(['$routeProvider', function($routeProvider) {
 		$routeProvider.
-			when('/entries', {
-				templateUrl: 'partials/entries.html',
-				controller: 'TubeController'
+			when('/configuration', {
+				templateUrl: 'partials/configuration.html',
+				controller: 'ConfigurationController'
 			}).
-			when('/entries/:id', {
-				templateUrl: 'partials/entry.html',
-		        controller: 'TubeDetailController'
+			when('/main', {
+				templateUrl: 'partials/main.html',
+		        controller: 'MainController'
 			}).			
 			otherwise({
-				redirectTo: '/entries'
+				redirectTo: '/main'
 			});
 	}]);
 	
-	app.factory('TubeEntryService', ['$resource', function($resource) {
-		return $resource('/tubecurator/rest/tubeentries/:id');
+	app.factory('ConfigurationRestService', ['$resource', function($resource) {
+		return $resource('/Asignator/rest/configurationRestService');
 	}]);
 	
-	app.controller('TubeController', ['$scope', '$sce', 'TubeEntryService', function($scope, $sce, TubeEntryService) {
-		$scope.tubeEntries = TubeEntryService.query();
-		
-		$scope.trustSrc = function(src){
-			return $sce.trustAsResourceUrl(src);
-		};
+	app.controller('ConfigurationController', ['$scope', '$sce', 'ConfigurationRestService', function($scope, $sce, ConfigurationRestService) {
 		
 	}]);
 
-	app.controller('TubeDetailController', ['$scope', '$sce', '$routeParams', 'TubeEntryService', function($scope, $sce, $routeParams, TubeEntryService) {
-		$scope.tubeEntry = TubeEntryService.get({ id: $routeParams.id});
-			
-		$scope.trustSrc = function(src){
-			return $sce.trustAsResourceUrl(src);
-		};
+	app.controller('MainController', ['$scope', '$sce', '$routeParams', function($scope, $sce, $routeParams) {
 		
 	}]);
 	
