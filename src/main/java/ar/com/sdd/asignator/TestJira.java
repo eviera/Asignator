@@ -13,7 +13,7 @@ public class TestJira {
 		try {
 	        final JerseyJiraRestClientFactory factory = new JerseyJiraRestClientFactory();
 	        final URI jiraServerUri = new URI("http://www.sdd.com.ar/jira");
-	        final JiraRestClient restClient = factory.createWithBasicHttpAuthentication(jiraServerUri, "eviera", "telperion");
+	        final JiraRestClient restClient = factory.createWithBasicHttpAuthentication(jiraServerUri, "eviera", "");
 	        final NullProgressMonitor pm = new NullProgressMonitor();
 	        final Issue issue = restClient.getIssueClient().getIssue("ARSA-1", pm);
 	 
