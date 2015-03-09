@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+//http://crunchify.com/create-very-simple-jersey-rest-service-and-send-json-data-from-java-client/
 //http://www.mkyong.com/webservices/jax-rs/restfull-java-client-with-java-net-url/
 //Usar Gson con https://developer.atlassian.com/static/rest/jira/4.4.1.html#id150510
 
