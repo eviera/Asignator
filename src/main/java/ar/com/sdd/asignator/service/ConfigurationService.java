@@ -4,8 +4,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
 import org.apache.log4j.Logger;
 
+@Path("/configuration")
 public class ConfigurationService {
 
 	private final Logger log = Logger.getLogger(getClass());
@@ -83,6 +88,13 @@ public class ConfigurationService {
 		this.mailServerFolder = mailServerFolder;
 	}
 
+	
+	@GET
+	@Produces("application/json")
+	public String getProperty(String key) {
+		return "caca";
+	}
+	
 	@Override
 	public String toString() {
 		return "ConfigurationService [" + (mailServerHost != null ? "mailServerHost=" + mailServerHost + ", " : "")
