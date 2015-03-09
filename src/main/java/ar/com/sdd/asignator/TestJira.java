@@ -14,7 +14,6 @@ public class TestJira {
 
 	public static void doit() {
 		try {
-			
 			URL url = new URL("http://www.sdd.com.ar/jira/rest/api/2.0.alpha1/issue/ARSA-1");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
@@ -31,7 +30,6 @@ public class TestJira {
 			while ((output = br.readLine()) != null) {
 				System.out.println(output);
 			}
-	 
 			conn.disconnect();			
 			
 		} catch (Exception e) {
