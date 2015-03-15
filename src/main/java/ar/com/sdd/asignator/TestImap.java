@@ -3,13 +3,11 @@ package ar.com.sdd.asignator;
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Store;
-import javax.mail.internet.MimeMessage;
 
 public class TestImap {
 
