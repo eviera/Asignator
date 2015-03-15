@@ -146,7 +146,7 @@ public class TestJira {
 
 			Hashtable<String, Object> struct = new Hashtable<String, Object>();
 			// Constants for issue creation
-			struct.put("summary", "Prueba XMLRPC3");
+			struct.put("summary", "Prueba XMLRPC4");
 			struct.put("description", "Descripcion \n\nh2.Pruebas\n- uno\n- dos\n- (/) tres");
 			struct.put("project", "TKT");
 			struct.put("type", "3"); //3=Task
@@ -159,7 +159,7 @@ public class TestJira {
 			 * Saque de requiered en TKT: timetracking y components
 			 */
 			//struct.put("timetracking", "1h");
-			//struct.put("components", "10044");
+			struct.put("components", Arrays.asList(makeCustomFieldHashtable("10044", "10044")));
 			struct.put("customFieldValues", Arrays.asList(
 					makeCustomFieldHashtable("customfield_10064", "eviera"), 
 					makeCustomFieldHashtable("customfield_10060", "10040"),
