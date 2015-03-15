@@ -6,6 +6,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
@@ -90,9 +92,8 @@ public class TestJira {
 		try {
 			URL url = new URL("http://www.sdd.com.ar/jira/rest/api/2.0.alpha1/issue/ARSA-1");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			
-			
-			String encoded = "para tener Base64, incluir commons-codec 1.6";//Base64.encodeBase64String("user:pass".getBytes());
+
+			String encoded = "para tener Base64, incluir commons-codec 1.6";// Base64.encodeBase64String("user:pass".getBytes());
 			conn.setRequestProperty("Authorization", "Basic " + encoded);
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "application/json");
@@ -127,11 +128,13 @@ public class TestJira {
 			XmlRpcClient rpcClient = new XmlRpcClient();
 			rpcClient.setConfig(config);
 
-			String loginToken = (String) rpcClient.execute("jira1.login", Arrays.asList("eviera", "xxxx"));
+			String loginToken = (String) rpcClient.execute("jira1.login", Arrays.asList("eviera", "xxx"));
 
 			@SuppressWarnings("unchecked")
 			HashMap<String, String> sie1 = (HashMap<String, String>) rpcClient.execute("jira1.getIssue", Arrays.asList(loginToken, "SIE-1"));
 			System.out.println("Issue: " + sie1.get("key"));
+			Object comps = (Object) rpcClient.execute("jira1.getComponents", Arrays.asList(loginToken, "TKT"));
+			System.out.println("Comps: " + comps);
 			/*
 			 * List projects =
 			 * (List)rpcClient.execute("jira1.getProjectsNoSchemes",
@@ -140,6 +143,32 @@ public class TestJira {
 			 * System.out.println(project.get("name") + " with lead " +
 			 * project.get("lead")); }
 			 */
+
+			Hashtable<String, Object> struct = new Hashtable<String, Object>();
+			// Constants for issue creation
+			struct.put("summary", "Prueba XMLRPC3");
+			struct.put("description", "Descripcion \n\nh2.Pruebas\n- uno\n- dos\n- (/) tres");
+			struct.put("project", "TKT");
+			struct.put("type", "3"); //3=Task
+			struct.put("versions", "TRUNK D8");
+			struct.put("assignee", "eviera");
+			struct.put("priority", "7");
+			
+			
+			/*
+			 * Saque de requiered en TKT: timetracking y components
+			 */
+			//struct.put("timetracking", "1h");
+			//struct.put("components", "10044");
+			struct.put("customFieldValues", Arrays.asList(
+					makeCustomFieldHashtable("customfield_10064", "eviera"), 
+					makeCustomFieldHashtable("customfield_10060", "10040"),
+					makeCustomFieldHashtable("customfield_10040", "10030"))); //Solicitante
+
+			@SuppressWarnings("unchecked")
+			HashMap<String, String> creationResult = (HashMap<String, String>)rpcClient.execute("jira1.createIssue", Arrays.asList(loginToken, struct));
+			System.out.println(creationResult);
+			System.out.println("key creado=" + creationResult.get("key"));
 
 			// Log out
 			Boolean bool = (Boolean) rpcClient.execute("jira1.logout", Arrays.asList(loginToken));
@@ -150,6 +179,14 @@ public class TestJira {
 		}
 
 	}
+	
+	
+    private static  Hashtable<String, Object> makeCustomFieldHashtable(String customFieldId, String value) {
+        Hashtable<String, Object> t = new Hashtable<String, Object>();
+        t.put("customfieldId", customFieldId);
+        t.put("values", Arrays.asList(value));
+        return t;
+    }
 
 	public static void main(String[] args) {
 		TestJira.doitRPC();
