@@ -13,16 +13,8 @@ public class ConfigurationRest {
 	
 	@GET
 	@Produces("application/json")
-	@Path("properties")
 	public Map<String, String> getProperties() {
 		return ConfigurationService.getInstance().getPropertiesMap();
-	}
-
-	@GET
-	@Produces("application/json")
-	@Path("path2")
-	public String getSasa() {
-		return "sasa";
 	}
 
 }

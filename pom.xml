@@ -55,11 +55,30 @@
 			<version>1.1.GA</version>
 		</dependency>
 		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxb-provider</artifactId>
+			<version>1.1.GA</version>
+			<exclusions>
+				<!-- se quita por que el jdk ya lo tiene -->
+				<exclusion>
+					<groupId>javax.xml.stream</groupId>
+					<artifactId>stax-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- del resteasy-jaxb, para no pisar las del jboss -->
+		<dependency>
 			<groupId>org.apache.xmlrpc</groupId>
 			<artifactId>xmlrpc-client</artifactId>
 			<version>3.0</version>
+			<exclusions>
+				<exclusion>
+					<!-- del xmlrpc, para no pisar las del jboss -->
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>				
+				</exclusion>
+			</exclusions>
 		</dependency>
-
 	</dependencies>
 	<build>
 		<finalName>Asignator</finalName>

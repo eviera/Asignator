@@ -21,11 +21,11 @@
 	}]);
 	
 	app.factory('ConfigurationRestService', ['$resource', function($resource) {
-		return $resource('/Asignator/rest/configurationRestService');
+		return $resource('/Asignator/rest/configuration');
 	}]);
 	
 	app.controller('ConfigurationController', ['$scope', '$sce', 'ConfigurationRestService', function($scope, $sce, ConfigurationRestService) {
-		
+		$scope.configurationProperties = ConfigurationRestService.query();
 	}]);
 
 	app.controller('MainController', ['$scope', '$sce', '$routeParams', function($scope, $sce, $routeParams) {

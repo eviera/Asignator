@@ -10,7 +10,7 @@
 <body>
 
 <%
-	TestJira.doit();
+	//TestJira.doit();
 %>
 
 </body>
