@@ -11,7 +11,8 @@ http://stackoverflow.com/questions/20122099/error-in-javamail-pkix-path-building
 Nota de instalacion:
 - Hacer un git clone https://github.com/eviera/Asignator.git
 - En el Eclipse, importar con Existing Maven Projects
-- En las propiedades del proyecto, agregar un target runtime (un jobss o tomcat) para que tenga las librerias servlet
+- NO ES NECESARIO -En las propiedades del proyecto, agregar un target runtime (un jobss o tomcat) para que tenga las librerias servlet-
+- Correr en WildFly 8.1
 
 
 Backend:

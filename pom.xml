@@ -37,19 +37,8 @@
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jaxrs</artifactId>
-			<version>1.1.GA</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-jaxb-provider</artifactId>
-			<version>1.1.GA</version>
-			<exclusions>
-				<!-- se quita por que el jdk ya lo tiene -->
-				<exclusion>
-					<groupId>javax.xml.stream</groupId>
-					<artifactId>stax-api</artifactId>
-				</exclusion>
-			</exclusions>
+			<version>3.0.9.Final</version>
+			<scope>provided</scope>
 		</dependency>
 		<!-- del resteasy-jaxb, para no pisar las del jboss -->
 		<dependency>

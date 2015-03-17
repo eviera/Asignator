@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.Scanner;
 
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
@@ -116,6 +116,7 @@ public class TestJira {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void doitRPC() {
 		try {
 			XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
@@ -128,9 +129,13 @@ public class TestJira {
 			XmlRpcClient rpcClient = new XmlRpcClient();
 			rpcClient.setConfig(config);
 
-			String loginToken = (String) rpcClient.execute("jira1.login", Arrays.asList("eviera", "xxx"));
+			System.out.print("Entre password jira: ");
+			Scanner in = new Scanner(System.in);
+			String password = in.next();
+			in.close();
+			
+			String loginToken = (String) rpcClient.execute("jira1.login", Arrays.asList("eviera", password));
 
-			@SuppressWarnings("unchecked")
 			HashMap<String, String> sie1 = (HashMap<String, String>) rpcClient.execute("jira1.getIssue", Arrays.asList(loginToken, "SIE-1"));
 			System.out.println("Issue: " + sie1.get("key"));
 			Object comps = (Object) rpcClient.execute("jira1.getComponents", Arrays.asList(loginToken, "TKT"));
@@ -165,7 +170,6 @@ public class TestJira {
 					makeCustomFieldHashtable("customfield_10060", "10040"),
 					makeCustomFieldHashtable("customfield_10040", "10030"))); //Solicitante
 
-			@SuppressWarnings("unchecked")
 			HashMap<String, String> creationResult = (HashMap<String, String>)rpcClient.execute("jira1.createIssue", Arrays.asList(loginToken, struct));
 			System.out.println(creationResult);
 			System.out.println("key creado=" + creationResult.get("key"));

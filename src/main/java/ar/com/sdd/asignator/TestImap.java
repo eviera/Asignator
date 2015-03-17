@@ -2,6 +2,7 @@ package ar.com.sdd.asignator;
 
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Scanner;
 
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -20,7 +21,13 @@ public class TestImap {
 			props.put("mail.imaps.ssl.trust", "*");
 			Session session = Session.getDefaultInstance(props, null);
 			store = session.getStore("imaps");
-			store.connect("mail.sdd.com.ar", 993, "soporteebf@sdd.com.ar", "");
+			
+			System.out.print("Entre password mail: ");
+			Scanner in = new Scanner(System.in);
+			String password = in.next();
+			in.close();
+			
+			store.connect("mail.sdd.com.ar", 993, "soporteebf@sdd.com.ar", password);
 			folder = store.getFolder("Inbox");
 			folder.open(Folder.READ_WRITE);
 			Message messages[] = folder.getMessages();
