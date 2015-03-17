@@ -7,21 +7,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Asignator Maven Webapp</name>
 	<url>http://maven.apache.org</url>
-	<repositories>
-		<repository>
-			<id>atlassian-public</id>
-			<url>https://maven.atlassian.com/repository/public</url>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-				<checksumPolicy>warn</checksumPolicy>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-				<checksumPolicy>warn</checksumPolicy>
-			</releases>
-		</repository>
-	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -75,7 +60,7 @@
 				<exclusion>
 					<!-- del xmlrpc, para no pisar las del jboss -->
 					<groupId>xml-apis</groupId>
-					<artifactId>xml-apis</artifactId>				
+					<artifactId>xml-apis</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
