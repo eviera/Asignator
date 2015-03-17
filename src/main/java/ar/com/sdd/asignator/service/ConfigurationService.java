@@ -1,7 +1,10 @@
 package ar.com.sdd.asignator.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -10,29 +13,20 @@ import org.apache.log4j.Logger;
 
 public class ConfigurationService {
 
+	private static final String ASIGNATOR_PROPERTIES = "/asignator.properties";
+
 	private final Logger log = Logger.getLogger(getClass());
 	
 	private static ConfigurationService instance = null;
 	
 	private Properties props;
-	private String mailServerHost;
-	private Integer mailServerPort;
-	private String mailServerUser;
-	private String mailServerPassword;
-	private String mailServerFolder;
 	
 	private ConfigurationService() {
 		//Levanto las properties
-		InputStream propStream = ConfigurationService.class.getResourceAsStream("/asignator.properties");
+		InputStream propStream = ConfigurationService.class.getResourceAsStream(ASIGNATOR_PROPERTIES);
 		props = new Properties();
 		try {
 			props.load(propStream);
-			setMailServerHost(props.getProperty("mail.server.host"));
-			setMailServerPort(props.getProperty("mail.server.port") != null ? Integer.valueOf(props.getProperty("mail.server.port")) : null);
-			setMailServerUser(props.getProperty("mail.server.user"));
-			setMailServerPassword(props.getProperty("mail.server.password"));
-			setMailServerFolder(props.getProperty("mail.server.folder"));
-			
 		} catch (IOException e) {
 			log.error("Error al levantar las properties", e);
 		}
@@ -45,46 +39,6 @@ public class ConfigurationService {
 		return instance;
 	}
 
-	public String getMailServerHost() {
-		return mailServerHost;
-	}
-
-	public void setMailServerHost(String mailServerHost) {
-		this.mailServerHost = mailServerHost;
-	}
-
-	public Integer getMailServerPort() {
-		return mailServerPort;
-	}
-
-	public void setMailServerPort(Integer mailServerPort) {
-		this.mailServerPort = mailServerPort;
-	}
-
-	public String getMailServerUser() {
-		return mailServerUser;
-	}
-
-	public void setMailServerUser(String mailServerUser) {
-		this.mailServerUser = mailServerUser;
-	}
-
-	public String getMailServerPassword() {
-		return mailServerPassword;
-	}
-
-	public void setMailServerPassword(String mailServerPassword) {
-		this.mailServerPassword = mailServerPassword;
-	}
-
-	public String getMailServerFolder() {
-		return mailServerFolder;
-	}
-
-	public void setMailServerFolder(String mailServerFolder) {
-		this.mailServerFolder = mailServerFolder;
-	}
-
 	public Map<String, String> getPropertiesMap() {
 		Map<String, String> map = new HashMap<String, String>();
 		for (String key : props.stringPropertyNames()) {
@@ -93,14 +47,24 @@ public class ConfigurationService {
 		return map;
 	}
 	
-	
-	@Override
-	public String toString() {
-		return "ConfigurationService [" + (mailServerHost != null ? "mailServerHost=" + mailServerHost + ", " : "")
-				+ (mailServerPort != null ? "mailServerPort=" + mailServerPort + ", " : "")
-				+ (mailServerUser != null ? "mailServerUser=" + mailServerUser + ", " : "")
-				+ (mailServerPassword != null ? "mailServerPassword=" + mailServerPassword + ", " : "")
-				+ (mailServerFolder != null ? "mailServerFolder=" + mailServerFolder : "") + "]";
+	public String getProperty(String key) {
+		return props.getProperty(key);
 	}
 
+	public void setProperty(String key, String value) {
+		props.put(key, value);
+		//updateProperties();
+	}
+	
+	private void updateProperties() {
+		//TODO revisar esto porque no funciona
+		// java.lang.IllegalArgumentException: URI scheme is not "file"
+		
+		URL url = ConfigurationService.class.getResource(ASIGNATOR_PROPERTIES);
+		try {
+			props.store(new FileOutputStream(new File(url.toURI())), null);
+		} catch (Exception e) {
+			throw new RuntimeException("Problema al guardar las properties", e);
+		}		
+	}
 }

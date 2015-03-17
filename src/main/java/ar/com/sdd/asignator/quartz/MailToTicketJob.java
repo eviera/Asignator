@@ -17,6 +17,8 @@ public class MailToTicketJob implements Job {
 		
 		//Dentro del executor instancia al JiraService y crea el jira
 		
+		configurationService.setProperty("tito", "puente");
+		
 		System.out.println("Jobazo2");
 	}
 
