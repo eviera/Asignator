@@ -2,9 +2,13 @@ package ar.com.sdd.asignator.service;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.StringReader;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -13,8 +17,6 @@ import org.apache.log4j.Logger;
 
 public class ConfigurationService {
 
-	private static final String ASIGNATOR_PROPERTIES = "/asignator.properties";
-
 	private final Logger log = Logger.getLogger(getClass());
 	
 	private static ConfigurationService instance = null;
@@ -22,17 +24,15 @@ public class ConfigurationService {
 	private Properties props;
 	
 	private ConfigurationService() {
-		//Levanto las properties
-		InputStream propStream = ConfigurationService.class.getResourceAsStream(ASIGNATOR_PROPERTIES);
-		props = new Properties();
 		try {
-			props.load(propStream);
-		} catch (IOException e) {
+			//Levanto las properties de la base H2
+			props = getPropertiesFromH2();
+		} catch (Exception e) {
 			log.error("Error al levantar las properties", e);
 		}
 	}
-	
-	public static ConfigurationService getInstance() {
+
+	public static synchronized ConfigurationService getInstance() {
 		if (instance == null) {
 			instance = new ConfigurationService();
 		}
@@ -57,14 +57,48 @@ public class ConfigurationService {
 	}
 	
 	private void updateProperties() {
-		//TODO revisar esto porque no funciona
-		// java.lang.IllegalArgumentException: URI scheme is not "file"
-		
-		URL url = ConfigurationService.class.getResource(ASIGNATOR_PROPERTIES);
-		try {
-			props.store(new FileOutputStream(new File(url.toURI())), null);
-		} catch (Exception e) {
-			throw new RuntimeException("Problema al guardar las properties", e);
-		}		
+		//TODO
 	}
+	
+
+	/**
+	 * Levanta la base H2 del directorio del usuario
+	 * Si no tiene la table ASIGNATOR_PROPERTIES la crea y popula con las properties basicas
+	 * Carga las properties a memoria
+	 * @return
+	 */
+	private Properties getPropertiesFromH2() throws Exception {
+		Class.forName("org.h2.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:h2:~/asignator_database");
+		Statement stmt = conn.createStatement();
+		//Creo la tabla si no existe
+		stmt.execute("CREATE TABLE IF NOT EXISTS ASIGNATOR_PROPERTIES (ID INT PRIMARY KEY, PROPS VARCHAR(4000));");
+		//Intento levantar las properties del registro con id 0. Si no hay, agrego uno
+        ResultSet rs = stmt.executeQuery("select props from ASIGNATOR_PROPERTIES where id=0");
+        String props = null;
+        
+        while (rs.next()) {
+            props = rs.getString("props");
+        }
+        
+		if (props == null || props.equals("")) {
+			//Inserto valores por default
+			StringBuilder defaultProps = new StringBuilder();
+			defaultProps.append("mail.server.host=").append("\n");
+			defaultProps.append("mail.server.user=").append("\n");
+			defaultProps.append("mail.server.password=").append("\n");
+			defaultProps.append("mail.server.folder=").append("\n");
+			props = defaultProps.toString();
+			
+			PreparedStatement preparedStatement = conn.prepareStatement("insert into ASIGNATOR_PROPERTIES (id, props) values (0, ?)");
+			preparedStatement.setString(1, props);
+			preparedStatement.executeUpdate();				
+		}
+        
+		Properties properties = new Properties();
+		properties.load(new StringReader(props));
+			
+		return properties;
+	}
+	
 }
