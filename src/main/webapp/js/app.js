@@ -25,7 +25,7 @@
 	}]);
 	
 	app.controller('ConfigurationController', ['$scope', '$sce', 'ConfigurationRestService', function($scope, $sce, ConfigurationRestService) {
-		$scope.configurationProperties = ConfigurationRestService.query();
+		$scope.configurationProperties = ConfigurationRestService.get();
 	}]);
 
 	app.controller('MainController', ['$scope', '$sce', '$routeParams', function($scope, $sce, $routeParams) {

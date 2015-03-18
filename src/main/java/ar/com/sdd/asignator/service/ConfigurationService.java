@@ -84,10 +84,10 @@ public class ConfigurationService {
 		if (props == null || props.equals("")) {
 			//Inserto valores por default
 			StringBuilder defaultProps = new StringBuilder();
-			defaultProps.append("mail.server.host=").append("\n");
-			defaultProps.append("mail.server.user=").append("\n");
-			defaultProps.append("mail.server.password=").append("\n");
-			defaultProps.append("mail.server.folder=").append("\n");
+			defaultProps.append("mail_server_host=").append("\n");
+			defaultProps.append("mail_server_user=").append("\n");
+			defaultProps.append("mail_server_password=").append("\n");
+			defaultProps.append("mail_server_folder=").append("\n");
 			props = defaultProps.toString();
 			
 			PreparedStatement preparedStatement = conn.prepareStatement("insert into ASIGNATOR_PROPERTIES (id, props) values (0, ?)");
