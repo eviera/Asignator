@@ -6,7 +6,20 @@
 	</div>
 	<div class="form-group">
 		<label for="mailServerPort">Mail Server Port:</label>
-		<input type="text" class="form-control" id="mailServerPort" ng-model="configurationProperties.tito">
+		<input type="text" class="form-control" id="mailServerPort" ng-model="configurationProperties.mail_server_port">
 	</div>
-	<button type="submit" class="btn btn-default">Guardar</button>
+	<div class="form-group">
+		<label for="mailServerUser">Mail Server User:</label>
+		<input type="text" class="form-control" id="mailServerUser" ng-model="configurationProperties.mail_server_user">
+	</div>
+	<div class="form-group">
+		<label for="mailServerPass">Mail Server Password:</label>
+		<input type="password" class="form-control" id="mailServerPass" ng-model="configurationProperties.mail_server_pass">
+	</div>
+	<div class="form-group">
+		<label for="mailServerFolder">Mail Server Folder:</label>
+		<input type="text" class="form-control" id="mailServerFolder" ng-model="configurationProperties.mail_server_folder">
+	</div>
+
+	<button type="submit" class="btn btn-default" ng-click="save()">Guardar</button>
 </form>

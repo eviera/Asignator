@@ -1,9 +1,6 @@
 package ar.com.sdd.asignator.service;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.StringReader;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -51,15 +49,18 @@ public class ConfigurationService {
 		return props.getProperty(key);
 	}
 
-	public void setProperty(String key, String value) {
-		props.put(key, value);
-		//updateProperties();
+	public void setPropertiesMap(Map<String, String> propertiesMap) {
+		props = new Properties();
+		for (Entry<String, String> entry : propertiesMap.entrySet()) {
+			props.put(entry.getKey(), entry.getValue());
+		}
+		
+		try {
+			setPropertiesToH2(props);
+		} catch (Exception e) {
+			log.error("Error al guardar las properties", e);
+		}
 	}
-	
-	private void updateProperties() {
-		//TODO
-	}
-	
 
 	/**
 	 * Levanta la base H2 del directorio del usuario
@@ -85,8 +86,9 @@ public class ConfigurationService {
 			//Inserto valores por default
 			StringBuilder defaultProps = new StringBuilder();
 			defaultProps.append("mail_server_host=").append("\n");
+			defaultProps.append("mail_server_port=").append("\n");
 			defaultProps.append("mail_server_user=").append("\n");
-			defaultProps.append("mail_server_password=").append("\n");
+			defaultProps.append("mail_server_pass=").append("\n");
 			defaultProps.append("mail_server_folder=").append("\n");
 			props = defaultProps.toString();
 			
@@ -99,6 +101,19 @@ public class ConfigurationService {
 		properties.load(new StringReader(props));
 			
 		return properties;
+	}
+
+	private void setPropertiesToH2(Properties props) throws Exception {
+		StringBuilder propsString = new StringBuilder();
+		for (String key : props.stringPropertyNames()) {
+			propsString.append(key).append("=").append(props.getProperty(key)).append("\n");
+		}
+
+		Class.forName("org.h2.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:h2:~/asignator_database");
+		PreparedStatement preparedStatement = conn.prepareStatement("update ASIGNATOR_PROPERTIES set props = ? where id = 0;");
+		preparedStatement.setString(1, propsString.toString());
+		preparedStatement.executeUpdate();				
 	}
 	
 }

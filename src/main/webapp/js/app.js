@@ -26,6 +26,12 @@
 	
 	app.controller('ConfigurationController', ['$scope', '$sce', 'ConfigurationRestService', function($scope, $sce, ConfigurationRestService) {
 		$scope.configurationProperties = ConfigurationRestService.get();
+		
+		$scope.save = function() {
+			ConfigurationRestService.save($scope.configurationProperties, function() {
+				alert('Datos guardados!');
+			});
+		};
 	}]);
 
 	app.controller('MainController', ['$scope', '$sce', '$routeParams', function($scope, $sce, $routeParams) {
