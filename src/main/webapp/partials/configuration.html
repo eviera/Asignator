@@ -1,25 +1,59 @@
 <h2>Configuraci&oacute;n</h2>
 <form role="form">
-	<div class="form-group">
-		<label for="mailServerHost">Mail Server Host:</label>
-		<input type="text" class="form-control" id="mailServerHost" ng-model="configurationProperties.mail_server_host">
-	</div>
-	<div class="form-group">
-		<label for="mailServerPort">Mail Server Port:</label>
-		<input type="text" class="form-control" id="mailServerPort" ng-model="configurationProperties.mail_server_port">
-	</div>
-	<div class="form-group">
-		<label for="mailServerUser">Mail Server User:</label>
-		<input type="text" class="form-control" id="mailServerUser" ng-model="configurationProperties.mail_server_user">
-	</div>
-	<div class="form-group">
-		<label for="mailServerPass">Mail Server Password:</label>
-		<input type="password" class="form-control" id="mailServerPass" ng-model="configurationProperties.mail_server_pass">
-	</div>
-	<div class="form-group">
-		<label for="mailServerFolder">Mail Server Folder:</label>
-		<input type="text" class="form-control" id="mailServerFolder" ng-model="configurationProperties.mail_server_folder">
+
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<h3 class="panel-title">Mail</h3>
+		</div>
+		<div class="panel-body">
+			<div class="form-group">
+				<label for="mailServerHost">Mail Server Host</label>
+				<input type="text" class="form-control" id="mailServerHost" ng-model="configurationProperties.mail_server_host">
+			</div>
+			<div class="form-group">
+				<label for="mailServerPort">Mail Server Port</label>
+				<input type="text" class="form-control" id="mailServerPort" ng-model="configurationProperties.mail_server_port">
+			</div>
+			<div class="form-group">
+				<label for="mailServerUser">Mail Server User</label>
+				<input type="text" class="form-control" id="mailServerUser" ng-model="configurationProperties.mail_server_user">
+			</div>
+			<div class="form-group">
+				<label for="mailServerPass">Mail Server Password</label>
+				<input type="password" class="form-control" id="mailServerPass" ng-model="configurationProperties.mail_server_pass">
+			</div>
+			<div class="form-group">
+				<label for="mailServerFolder">Mail Server Folder</label>
+				<input type="text" class="form-control" id="mailServerFolder" ng-model="configurationProperties.mail_server_folder">
+			</div>
+			<div class="form-group">
+				<label for="mailServerFolder">Mail Blacklist <span class="badge">CSV</span></label>
+				<input type="text" class="form-control" id="mailBlacklist" ng-model="configurationProperties.mail_blacklist">
+			</div>
+		</div>
 	</div>
 
-	<button type="submit" class="btn btn-default" ng-click="save()">Guardar</button>
+	<div class="panel panel-warning">
+		<div class="panel-heading">
+			<h3 class="panel-title">Jira</h3>
+		</div>
+		<div class="panel-body">
+			<div class="form-group">
+				<label for="mailServerHost">Jira Server Host</label>
+				<input type="text" class="form-control" id="jiraServerHost" ng-model="configurationProperties.jira_server_host">
+			</div>
+			<div class="form-group">
+				<label for="mailServerUser">Jira Server User</label>
+				<input type="text" class="form-control" id="jiraServerUser" ng-model="configurationProperties.jira_server_user">
+			</div>
+			<div class="form-group">
+				<label for="mailServerPass">Jira Server Password</label>
+				<input type="password" class="form-control" id="mailServerPass" ng-model="configurationProperties.jira_server_pass">
+			</div>
+
+
+		</div>
+	</div>
+
+	<button type="submit" class="btn btn-primary" ng-click="save()">Guardar</button>
 </form>

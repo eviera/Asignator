@@ -90,6 +90,12 @@ public class ConfigurationService {
 			defaultProps.append("mail_server_user=").append("\n");
 			defaultProps.append("mail_server_pass=").append("\n");
 			defaultProps.append("mail_server_folder=").append("\n");
+			defaultProps.append("mail_blacklist=").append("\n");
+
+			defaultProps.append("jira_server_host=").append("\n");
+			defaultProps.append("jira_server_user=").append("\n");
+			defaultProps.append("jira_server_pass=").append("\n");
+
 			props = defaultProps.toString();
 			
 			PreparedStatement preparedStatement = conn.prepareStatement("insert into ASIGNATOR_PROPERTIES (id, props) values (0, ?)");

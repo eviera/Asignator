@@ -115,7 +115,7 @@ public class TestJira {
 			e.printStackTrace();
 		}
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public static void doitRPC() {
 		try {
