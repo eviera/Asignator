@@ -17,6 +17,12 @@
 		<param-value>/rest</param-value>
 	</context-param>
 
+	<!-- Evita que se inicie el quartz cuando arranca el servidor (se inicia por la pantalla de configuracion) -->
+    <context-param>
+         <param-name>quartz:start-on-load</param-name>
+         <param-value>false</param-value>
+     </context-param>	
+     
 	<listener>
 		<listener-class>
 			org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap

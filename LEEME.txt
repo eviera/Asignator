@@ -33,3 +33,6 @@ Frontend:
 - Soportar drag&drop de multiples tkts a un usuario
 - El drop dispara una llamada a JiraManagerREST (que tira una llamada REST a Jira) para asignar el mail
 - Los tkts asignados desaparecen del panel izquierdo
+- Pantalla Configuracion
+-- Listar las properties
+-- Boton para parar/arrancar la tarea

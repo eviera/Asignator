@@ -39,6 +39,9 @@ public class MailService {
 			
 			//Loopea por los mensajes y llama al mailExecutor por cada uno
 			for (Message message : messages) {
+				
+				//TODO chequear la blacklist
+				
 				loopExecutor.mailExecutor(message);
 			}
 			

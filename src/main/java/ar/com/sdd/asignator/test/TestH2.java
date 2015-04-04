@@ -1,4 +1,4 @@
-package ar.com.sdd.asignator;
+package ar.com.sdd.asignator.test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

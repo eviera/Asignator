@@ -1,4 +1,4 @@
-package ar.com.sdd.asignator;
+package ar.com.sdd.asignator.test;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -17,8 +17,12 @@ public class TestImap {
 		Store store = null;
 		try {
 			Properties props = System.getProperties();
+			
+			/* SDD
 			props.setProperty("mail.store.protocol", "imaps");
 			props.put("mail.imaps.ssl.trust", "*");
+			*/
+			
 			Session session = Session.getDefaultInstance(props, null);
 			store = session.getStore("imaps");
 			
@@ -27,8 +31,17 @@ public class TestImap {
 			String password = in.next();
 			in.close();
 			
+			/* GMAIL 
+			 * Activar https://www.google.com/settings/security/lesssecureapps
+			 * 
+			 */
+			store.connect("imap.gmail.com", "emiliano.viera@gmail.com", password);
+			folder = store.getFolder("Thread");
+			
+			/* SDD
 			store.connect("mail.sdd.com.ar", 993, "soporteebf@sdd.com.ar", password);
 			folder = store.getFolder("Inbox");
+			*/
 			folder.open(Folder.READ_WRITE);
 			Message messages[] = folder.getMessages();
 			System.out.println("No of Messages : " + folder.getMessageCount());
@@ -75,8 +88,10 @@ public class TestImap {
 				folder.expunge();
 				*/
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
-			if (folder != null) {
+			if (folder != null && folder.isOpen()) {
 				folder.close(true);
 			}
 			if (store != null) {
