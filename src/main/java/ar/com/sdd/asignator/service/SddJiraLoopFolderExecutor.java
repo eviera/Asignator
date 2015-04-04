@@ -13,7 +13,7 @@ public class SddJiraLoopFolderExecutor implements MailServiceLoopFolderExecutor 
 
 	@Override
 	public void mailExecutor(Message message) throws MessagingException {
-		log.debug("Ejectuando mensaje [" + message + "]");
+		log.info("Ejectuando mensaje [" + message + "]");
 		
 		System.out.println(message.getSubject());
 		

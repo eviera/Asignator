@@ -7,10 +7,17 @@
 		<h3 class="panel-title">Tarea</h3>
 	</div>
 	<div class="panel-body">
-		<button type="submit" class="btn btn-success" ng-click="startScheduler()">Start</button>
-		<button type="submit" class="btn btn-danger" ng-click="stopScheduler()">Stop</button>
-		Scheduler:<span ng-bind="schedulerStatus.status">?</span>
-		
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-6">
+					Estado de la tarea <label ng-bind="schedulerStatus.status" ng-class="{'label label-success': schedulerStatus.status=='on', 'label label-danger': schedulerStatus.status=='off'}">?</label>
+				</div>
+				<div class="col-md-6 text-right">
+					<button type="submit" class="btn btn-success" ng-click="startScheduler()">Start</button>
+					<button type="submit" class="btn btn-danger" ng-click="stopScheduler()">Stop</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
