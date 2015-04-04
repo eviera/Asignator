@@ -31,6 +31,7 @@
 	app.controller('ConfigurationController', ['$scope', '$sce', 'ConfigurationRestService', 'SchedulerRestService', function($scope, $sce, ConfigurationRestService, SchedulerRestService) {
 		$scope.configurationProperties = ConfigurationRestService.get();
 		$scope.schedulerStatus = SchedulerRestService.get();
+		console.log($scope.schedulerStatus);
 		
 		
 		$scope.save = function() {
