@@ -14,7 +14,7 @@ import ar.com.sdd.asignator.service.ConfigurationService;
 @Path("/configuration")
 public class ConfigurationRest {
 	
-	private static final Logger log = Logger.getLogger(ConfigurationRest.class);
+	private final Logger log = Logger.getLogger(getClass());
 	
 	@GET
 	@Produces("application/json")

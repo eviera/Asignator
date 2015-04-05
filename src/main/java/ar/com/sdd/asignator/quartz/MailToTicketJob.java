@@ -10,7 +10,7 @@ import ar.com.sdd.asignator.service.SddJiraLoopFolderExecutor;
 
 public class MailToTicketJob implements Job {
 
-	private static final Logger log = Logger.getLogger(MailToTicketJob.class);
+	private final Logger log = Logger.getLogger(getClass());
 	
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {

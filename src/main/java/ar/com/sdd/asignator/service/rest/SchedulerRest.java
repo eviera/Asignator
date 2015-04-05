@@ -14,7 +14,7 @@ import org.quartz.impl.StdSchedulerFactory;
 @Path("/scheduler")
 public class SchedulerRest {
 
-	private static final Logger log = Logger.getLogger(SchedulerRest.class);
+	private final Logger log = Logger.getLogger(getClass());
 
 	private static final String ASIGNATOR_SCHEDULER = "AsignatorScheduler";
 

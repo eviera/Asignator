@@ -81,6 +81,7 @@ public class ConfigurationService {
         while (rs.next()) {
             props = rs.getString("props");
         }
+        conn.close();
         
 		if (props == null || props.equals("")) {
 			//Inserto valores por default
@@ -110,6 +111,7 @@ public class ConfigurationService {
 	}
 
 	private void setPropertiesToH2(Properties props) throws Exception {
+		log.info("Guardando las properties en H2");
 		StringBuilder propsString = new StringBuilder();
 		for (String key : props.stringPropertyNames()) {
 			propsString.append(key).append("=").append(props.getProperty(key)).append("\n");
@@ -119,7 +121,9 @@ public class ConfigurationService {
 		Connection conn = DriverManager.getConnection("jdbc:h2:~/asignator_database");
 		PreparedStatement preparedStatement = conn.prepareStatement("update ASIGNATOR_PROPERTIES set props = ? where id = 0;");
 		preparedStatement.setString(1, propsString.toString());
-		preparedStatement.executeUpdate();				
+		int modified = preparedStatement.executeUpdate();
+		log.info("Se han modificado [" + modified + "] registros");
+		conn.close();
 	}
 	
 }
