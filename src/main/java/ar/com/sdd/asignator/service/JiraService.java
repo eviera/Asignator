@@ -28,6 +28,7 @@ public class JiraService {
 		configurationService = ConfigurationService.getInstance();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public String createNewTicketForMessage(Message message) {
 		log.info("Creando un nuevo ticket");
 		try {
@@ -51,20 +52,14 @@ public class JiraService {
 			struct.put("type", "3"); //3=Task
 			struct.put("versions", "");
 			struct.put("assignee", assignee);
-			struct.put("priority", "7");
+			struct.put("priority", "7");	//7=PA (o N/A)
 			
-			/*
-			 * Saque de requiered en TKT: timetracking y components
-			 */
-			//struct.put("timetracking", "1h");
-			struct.put("components", Arrays.asList(makeCustomFieldHashtable("10044", "10044")));
 			struct.put("customFieldValues", Arrays.asList(
-					makeCustomFieldHashtable("customfield_10064", assignee), 
-					makeCustomFieldHashtable("customfield_10060", "10040"),
-					makeCustomFieldHashtable("customfield_10040", "10030"))); //Solicitante
+					makeCustomFieldHashtable("customfield_10064", assignee),	//Solicitante 
+					makeCustomFieldHashtable("customfield_10060", "10040"),		//Origen (10040=Interno, 10041=Externo)
+					makeCustomFieldHashtable("customfield_10040", "10030"))); 	//Riesgo (10030=N/A, 10031=Bajo, 10032=Mendio, 10033=Alto)
 	
 			log.info("Creando issue para el mail de subject [" + message.getSubject() + "]");
-			@SuppressWarnings("unchecked")
 			HashMap<String, String> creationResult = (HashMap<String, String>)rpcClient.execute("jira1.createIssue", Arrays.asList(loginToken, struct));
 			if (creationResult == null || creationResult.size() == 0) {
 				throw new RuntimeException("No se pudo crear el issue en jira. El creationResult volvio vacio");
