@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
+import org.jsoup.Jsoup;
 
 public class JiraService {
 	
@@ -116,7 +117,7 @@ public class JiraService {
     
 	private String getText(Part part) throws MessagingException, IOException {
 		if (part.isMimeType("text/*") || part.isMimeType("text/html")) {
-			return (String) part.getContent();
+			return parseHtml((String) part.getContent());
 			
 		} else	if (part.isMimeType("multipart/alternative")) {
 			// prefer html text over plain text
@@ -132,10 +133,10 @@ public class JiraService {
 				} else if (bp.isMimeType("text/html")) {
 					String s = getText(bp);
 					if (s != null) {
-						return s;
+						return parseHtml(s);
 					}
 				} else {
-					return getText(bp);
+					return parseHtml(getText(bp));
 				}
 			}
 			return text;
@@ -144,11 +145,16 @@ public class JiraService {
 			for (int i = 0; i < mp.getCount(); i++) {
 				String s = getText(mp.getBodyPart(i));
 				if (s != null) {
-					return s;
+					return parseHtml(s);
 				}
 			}
 		}
-
+		
 		throw new RuntimeException("No se puede obtener el cuerpo del mensaje de la parte [" + part + "]");
 	}
+	
+	private String parseHtml(String html) {
+		return Jsoup.parse(html).text();
+	}
+	
 }
