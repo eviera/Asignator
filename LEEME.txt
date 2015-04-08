@@ -8,11 +8,20 @@ http://cxf.apache.org/docs/jax-rs-client-api.html#JAX-RSClientAPI-CXFWebClientAP
 http://www.mkyong.com/java/example-to-run-multiple-jobs-in-quartz/
 http://stackoverflow.com/questions/20122099/error-in-javamail-pkix-path-building-failed-unable-to-find-valid-certification
 
+Conversor de html a txt:
+https://docs.atlassian.com/atlassian-mail/1.13-SNAPSHOT/clover/com/atlassian/mail/HtmlToTextConverter.html#HtmlToTextConverter
+
+
 Nota de instalacion:
 - Hacer un git clone https://github.com/eviera/Asignator.git
 - En el Eclipse, importar con Existing Maven Projects
 - NO ES NECESARIO -En las propiedades del proyecto, agregar un target runtime (un jobss o tomcat) para que tenga las librerias servlet-
 - Correr en WildFly 8.1
+
+Falta:
+- Ver como manejar las respuestas para que agregue al ticket ya creado
+- Administrar los adjuntos
+- Que pegue correctamente el contenido
 
 
 Backend:
