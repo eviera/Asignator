@@ -17,7 +17,8 @@ public class SddJiraLoopFolderExecutor implements MailServiceLoopFolderExecutor 
 	private static final String TKT_SIGNATURE = "TKT-";
 
 	@Override
-	public void mailExecutor(Folder folder, Message message) throws MessagingException {
+	public boolean mailExecutor(Folder folder, Message message) throws MessagingException {
+		boolean processed = false;
 		//Si el subject dice TKT- lo salto
 		if (!message.getSubject().contains(TKT_SIGNATURE)) {
 			//Copio el mail
@@ -33,15 +34,18 @@ public class SddJiraLoopFolderExecutor implements MailServiceLoopFolderExecutor 
 			
 			//Le asigno el subject al mail copiado y lo agrego al folder
 			messageCopy.setSubject("[" + ticketNumber + "] " + message.getSubject() );
-			folder.appendMessages(new Message[]{ messageCopy }); 
 			messageCopy.saveChanges();
-			//Borro el mail original
-			message.setFlag(Flags.Flag.DELETED, true);
-			
+			//Borro el mail original (si no esta ya expungeado)
+			if (!message.isExpunged()) {
+				message.setFlag(Flags.Flag.DELETED, true);
+			}
+			folder.appendMessages(new Message[]{ messageCopy }); 
+			log.info("Se creo nuevo mail con subject [" + messageCopy.getSubject() + "]");
+			processed = true;
 		} else {
 			log.debug("Mensaje salteado porque ya esta asignado");
 		}
-		
+		return processed;
 	}
 
 }

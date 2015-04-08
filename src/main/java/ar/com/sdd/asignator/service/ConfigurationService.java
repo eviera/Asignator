@@ -96,6 +96,7 @@ public class ConfigurationService {
 			defaultProps.append("jira_server_host=").append("\n");
 			defaultProps.append("jira_server_user=").append("\n");
 			defaultProps.append("jira_server_pass=").append("\n");
+			defaultProps.append("jira_issue_assignee=").append("\n");
 
 			props = defaultProps.toString();
 			

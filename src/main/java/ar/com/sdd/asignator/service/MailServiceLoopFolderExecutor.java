@@ -6,6 +6,6 @@ import javax.mail.MessagingException;
 
 public interface MailServiceLoopFolderExecutor {
 
-	public void mailExecutor(Folder folder, Message message) throws MessagingException;
+	public boolean mailExecutor(Folder folder, Message message) throws MessagingException;
 	
 }

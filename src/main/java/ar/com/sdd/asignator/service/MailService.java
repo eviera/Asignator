@@ -73,8 +73,7 @@ public class MailService {
 					}
 				}
 				if (!blackListed) {
-					loopExecutor.mailExecutor(folder, message);
-					anyProcessed = true;
+					anyProcessed = anyProcessed || loopExecutor.mailExecutor(folder, message);
 				} else {
 					log.info("El remitente esta en la blackList, no se procesa el mail");
 				}
@@ -84,6 +83,8 @@ public class MailService {
 			if (anyProcessed) {
 				log.info("Se procesaron mensajes y se hace commit del folder (expunge)");
 				folder.expunge();
+			} else {
+				log.info("No habia mensajes para procesar");
 			}
 				
 				

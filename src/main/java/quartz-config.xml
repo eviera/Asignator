@@ -19,7 +19,7 @@
 				<name>MailToTicketJobTrigger</name>
 				<job-name>MailToTicketJob</job-name>
 				<job-group>Grupo</job-group>
-				<cron-expression>0/20 * * * * ?</cron-expression>
+				<cron-expression>0/40 * * * * ?</cron-expression>
 			</cron>
 		</trigger>
 	</schedule>
