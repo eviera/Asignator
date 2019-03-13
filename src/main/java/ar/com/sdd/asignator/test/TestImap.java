@@ -35,7 +35,7 @@ public class TestImap {
 			 * Activar https://www.google.com/settings/security/lesssecureapps
 			 * 
 			 */
-			store.connect("imap.gmail.com", "emiliano.viera@gmail.com", password);
+			store.connect("imap.gmail.com", "tito@gmail.com", password);
 			folder = store.getFolder("Thread");
 			
 			/* SDD
